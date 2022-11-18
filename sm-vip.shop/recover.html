@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+
+<!-- Mirrored from sm-vip.shop/recover by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Nov 2022 16:09:08 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>SM Reset Password</title>
+    <link rel="stylesheet" href="static/home/css/app.css">
+    <link rel="stylesheet" href="static/home/css/iconfont.css">
+    <link rel="stylesheet" href="static/home/css/login.css">
+    <script type="text/javascript" src="static/home/layui/layui.js"></script>
+</head>
+<body class="login-content">
+<div class="login_con login_bj">
+    <div class="login-top">
+        <img src="static/home/img/logo.png">
+    </div>
+    <div class="login_title">Reset Password</div>
+    <div class="login_input">
+        <div class="login_input_text">91</div>
+        <div class="login_input_t">
+            <div class="login-input-wrapper">
+                <input type="number" name="mobile" class="login-input-input" placeholder="please enter mobile...">
+            </div>
+        </div>
+    </div>
+    <div class="login_input">
+        <div class="login_input_text">
+            <img src="static/home/img/from_2.png">
+        </div>
+        <div class="login_input_t">
+            <div class="uni-input-wrapper">
+                <input type="password" name="password" class="login-input-input" placeholder="please enter password...">
+            </div>
+        </div>
+    </div>
+    <div class="login_input">
+        <div class="login_input_text">
+            <img src="static/home/img/from_4.png">
+        </div>
+        <div class="login_input_t">
+            <div class="uni-input-wrapper">
+                <input type="text" name="code" class="login-input-input" placeholder="please enter OTP...">
+            </div>
+        </div>
+        <div class="login_input_send" onClick="sendCode($(this))">
+            <span class="input_send_btn">send</span>
+        </div>
+    </div>
+    <div class="login_btn">Reset</div>
+    <div class="log">
+        <a href="login.html">Back To Login</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var _token = "3Yu4cch1gWD1qenVWtF6u8wRX6CiUL6PwTE4kKor";
+    layui.use(['form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form, layer = layui.layer;
+        $("body").on('click', '.login_btn', function () {
+            var _this = $(this);
+            _this.attr('disabled', true);
+            var loading = layer.load(2, {shade: [0.5, '#393D49']});
+            var mobile = $.trim($("input[name='mobile']").val());
+            var password = $("input[name='password']").val();
+            var code = $("input[name='code']").val();
+            if (mobile.length == 0) {
+                layer.close(loading);
+                _this.attr("disabled", false);
+                layer.msg('please enter mobile...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                return false;
+            }
+            if (checkMobile(mobile) == false) {
+                layer.close(loading);
+                _this.attr("disabled", false);
+                layer.msg('mobile error...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                return false;
+            }
+            if ((/^\d{6}$/.test(code)) == false) {
+                layer.close(loading);
+                _this.attr('disabled', false);
+                layer.msg('please enter OTP...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                return false;
+            }
+            if (password.length == 0) {
+                layer.close(loading);
+                _this.attr('disabled', false);
+                layer.msg('please enter password...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                return false;
+            }
+            // var format = (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(password));
+            // if (format == false) {
+            //     layer.close(loading);
+            //     _this.attr('disabled', false);
+            //     $msg = 'password format error,8-16 alphanumeric...';
+            //     layer.msg($msg, {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+            //     return false;
+            // }
+            var data = {mobile: mobile, password: password, code: code, _token: _token};
+            $.post("recover.html", data, function (result) {
+                layer.close(loading);
+                _this.attr('disabled', false);
+                if (result.code == 200) {
+                    layer.msg('success...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                    location.href = "login.html";
+                } else {
+                    layer.msg(result.msg, {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                }
+                return false;
+            }, "json").fail(function () {
+                _this.attr('disabled', false);
+                layer.msg('error...', {time: 1000});
+                return false;
+            });
+        });
+    });
+
+
+    // 发送手机短信
+    function sendCode(_this) {
+        _this.attr("disabled", true);
+        var loading = layer.load(1, {shade: [0.5, '#393D49']});
+        var intAs = 60; // 手机短信超时时间
+        var mobile = $('input[name="mobile"]').val();
+        if (mobile.length == 0) {
+            layer.close(loading);
+            _this.attr("disabled", false);
+            layer.msg('please enter mobile...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+            return false;
+        }
+        if (checkMobile(mobile) == false) {
+            layer.close(loading);
+            _this.attr("disabled", false);
+            layer.msg('mobile error...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+            return false;
+        }
+        var data = {mobile: mobile, type: 1, _token: _token};
+        $.post("sendCode.html", data, function (result) {
+            layer.close(loading);
+            _this.attr('disabled', false);
+            if (result.code == 200) {
+                layer.msg('success...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                $("input[name='code']").val(result.data);
+                var _send = _this.find('.input_send_btn');
+                jsInnerTimeout(_send, intAs);
+            } else {
+                layer.msg(result.msg, {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+            }
+            return false;
+        }, "json").fail(function () {
+            _this.attr('disabled', false);
+            layer.msg('error...', {time: 1000});
+            return false;
+        });
+    }
+
+    //倒计时函数
+    function jsInnerTimeout(_this, intAs) {
+        intAs--;
+        if (intAs < 1) {
+            _this.html("send");
+            _this.attr("disabled", false);
+            return true;
+        }
+        _this.html(intAs + 's');
+        setTimeout(function () {
+            jsInnerTimeout(_this, intAs);
+        }, 1000);
+    }
+
+    //验证手机号
+    function checkMobile(mobile) {
+        var reg = /^\d{10}$/;
+        if (reg.test(mobile)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+
+<!-- Mirrored from sm-vip.shop/recover by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Nov 2022 16:09:08 GMT -->
+</html>

@@ -1,0 +1,99 @@
+﻿<!doctype html>
+<html lang="zh">
+
+<!-- Mirrored from sm-vip.shop/login by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Nov 2022 16:09:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>SM Login</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="wap-font-scale" content="no">
+    <link rel="stylesheet" href="static/home/css/app.css">
+    <link rel="stylesheet" href="static/home/css/iconfont.css">
+    <link rel="stylesheet" href="static/home/css/login.css">
+    <script type="text/javascript" src="static/home/layui/layui.js"></script>
+</head>
+<body class="login-content">
+<div class="login_con login_bj">
+    <div class="login-top">
+        <img src="static/home/img/logo.png">
+    </div>
+    <div class="login_title">Login</div>
+    <div class="login_input">
+        <div class="login_input_text">91</div>
+        <div class="login_input_t">
+            <div class="login-input-wrapper">
+                <input type="number" name="mobile" class="login-input-input" placeholder="please enter mobile...">
+            </div>
+        </div>
+    </div>
+    <div class="login_input">
+        <div class="login_input_text">
+            <img src="static/home/img/from_2.png">
+        </div>
+        <div class="login_input_t">
+            <div class="uni-input-wrapper">
+                <input type="password" name="password" class="login-input-input" placeholder="please enter password...">
+            </div>
+        </div>
+    </div>
+    <div class="forgot">
+        <a href="recover.html">Reset Password?</a>
+    </div>
+    <button type="button" class="login_btn">Login</button>
+    <div class="reg">
+        <a href="register.html">I dont have an account? to Register</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _token = "3Yu4cch1gWD1qenVWtF6u8wRX6CiUL6PwTE4kKor";
+    layui.use(['form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form, layer = layui.layer;
+
+        $("body").on('click', '.login_btn', function () {
+            var _this = $(this);
+            _this.attr('disabled', true);
+            var loading = layer.load(2, {shade: [0.5, '#393D49']});
+            var mobile = $("input[name='mobile']").val();
+            var password = $("input[name='password']").val();
+            if (mobile.length == 0) {
+                layer.close(loading);
+                _this.attr('disabled', false);
+                layer.msg('please enter mobile...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                return false;
+            }
+            if (password.length == 0) {
+                layer.close(loading);
+                _this.attr('disabled', false);
+                layer.msg('please enter password...', {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                return false;
+            }
+            var data = {mobile: mobile, password: password, _token: _token};
+            $.post("login.html", data, function (result) {
+                layer.close(loading);
+                _this.attr('disabled', false);
+                if (result.code == 200) {
+                    layer.msg('success...', {icon: 16, time: 500, shade: [0.5, '#393D49']});
+                    location.href = "index.html";
+                } else {
+                    layer.msg(result.msg, {icon: 16, time: 1000, shade: [0.5, '#393D49']});
+                }
+                return false;
+            }, "json").fail(function () {
+                _this.attr('disabled', false);
+                layer.msg('error...', {time: 1000});
+                return false;
+            });
+        });
+    });
+</script>
+</body>
+
+<!-- Mirrored from sm-vip.shop/login by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Nov 2022 16:09:05 GMT -->
+</html>

@@ -1,0 +1,17 @@
+HTTrack3.49-2+htsswf+htsjava launched on Fri, 18 Nov 2022 16:09:01 at https://sm-vip.shop/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://sm-vip.shop/ -O1 "C:\My Web Sites\vi shop" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+16:09:02	Warning: 	Found for https://sm-vip.shop/
+16:09:02	Warning: 	File has moved from https://sm-vip.shop/ to https://sm-vip.shop/login
+16:09:09	Error: 	"Not Found" (404) at link https://sm-vip.shop/static/home/css/iconfont.eot?t=1544866022335 (from https://sm-vip.shop/static/home/css/iconfont.css)
+16:09:09	Error: 	"Not Found" (404) at link https://sm-vip.shop/static/home/css/iconfont.ttf?t=1544866022335 (from https://sm-vip.shop/static/home/css/iconfont.css)
+16:09:09	Error: 	"Not Found" (404) at link https://sm-vip.shop/static/home/css/iconfont.svg?t=1544866022335 (from https://sm-vip.shop/static/home/css/iconfont.css)
+16:09:09	Error: 	"Not Found" (404) at link https://sm-vip.shop/static/home/img/from_1.png (from https://sm-vip.shop/static/home/css/login.css)
+
+HTTrack Website Copier/3.49-2 mirror complete in 8 seconds : 24 links scanned, 18 files written (236425 bytes overall) [189470 bytes received at 23683 bytes/sec], 242633 bytes transferred using HTTP compression in 22 files, ratio 69%, 12.0 requests per connection
+(4 errors, 2 warnings, 0 messages)
